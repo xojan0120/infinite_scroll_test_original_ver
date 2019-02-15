@@ -1,0 +1,18 @@
+- if @users.present?
+  - render_data = j( render @users ) 
+  / <li>要素群をjqueryオブジェクトに変換する
+  | list = $("#{render_data}");
+  / <li>要素群の最後の要素にクラス付与(そのページの最後の要素を表す)
+  | $(list.last()).addClass("page#{@page}-last");
+  / html変換用のダミー要素作成
+  | dummy = $("<div>");
+  / ダミー要素に<li>要素群を挿入(これによりjqueryオブジェクトからhtml要素に変換できる)
+  | dummy.append(list.clone(true));
+  / jqueryオブジェクトからhtml要素に変換したデータを挿入する
+  | $(".users").prepend(dummy.html());
+  / <li>要素群の最後の要素の位置を算出する
+  / * offset()は対象要素の位置(中身はtopとleft)
+  / * innerHeightは対象要素の表示されている範囲の高さ(padding含む)
+  | pos = $(".page#{@page}-last").offset().top - $(".users").innerHeight();
+  / <li>要素群の最後の要素の位置までスクロールする
+  | $(".users").scrollTop(pos);
