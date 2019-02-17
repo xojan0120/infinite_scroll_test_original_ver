@@ -11,8 +11,8 @@
   / jqueryオブジェクトからhtml要素に変換したデータを挿入する
   | $(".users").prepend(dummy.html());
   / <li>要素群の最後の要素の位置を算出する
-  / * offset()は対象要素の位置(中身はtopとleft)
-  / * innerHeightは対象要素の表示されている範囲の高さ(padding含む)
-  | pos = $(".page#{@page}-last").offset().top - $(".users").innerHeight();
+  / * positionは親要素からの相対的な位置(中身はtopとleft)を取得する。
+  /   但し、親要素のスタイルでpostionがrelative,absolute,fixedのいずれかがあることが必須
+  | pos = $(".page#{@page}-last").position();
   / <li>要素群の最後の要素の位置までスクロールする
-  | $(".users").scrollTop(pos);
+  | $(".users").scrollTop(pos.top);

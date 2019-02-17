@@ -32,8 +32,8 @@ load_history = ->
 # -----------------------------------------------------------------------------------------------------------------------------
 # ページを読み込む
 # -----------------------------------------------------------------------------------------------------------------------------
-load_page = (url, method = "GET", dataType = "script") ->
-  ajax = $.ajax({ url: url, data: method, dataType: dataType })
+load_page = (url, type = "GET", dataType = "script") ->
+  ajax = $.ajax({ url: url, type: type, dataType: dataType })
   ajax.done (data, status, xhr) ->
     if status == "success" # ステータスコードをチェックする場合は、xhr.status == 200
       push_history(url)
@@ -42,6 +42,8 @@ load_page = (url, method = "GET", dataType = "script") ->
 # 無限スクロールメイン
 # -----------------------------------------------------------------------------------------------------------------------------
 $(document).on "turbolinks:load", ->
+  $("li").on "click", (event) ->
+    console.log($(event.currentTarget).position().top)
   $(".users").on "scroll", (event) ->
     cur_url = location.pathname + location.search
 
